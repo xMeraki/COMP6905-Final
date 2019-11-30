@@ -1,0 +1,677 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Deploy Stack
+Metadata:
+  'AWS::CloudFormation::Interface':
+    ParameterGroups:
+      - Label:
+          default: Network Configuration
+        Parameters:
+          - AvailabilityZones
+          - NumberOfAZs
+          - VPCCIDR
+          - PrivateSubnet1CIDR
+          - PrivateSubnet2CIDR
+          - PrivateSubnet3CIDR
+          - PublicSubnet1CIDR
+          - PublicSubnet2CIDR
+          - PublicSubnet3CIDR
+          - RemoteAccessCIDR
+      - Label:
+          default: Security Configuration
+        Parameters:
+          - KeyPairName
+      - Label:
+          default: Linux Bastion Amazon EC2 Configuration
+        Parameters:
+          - BastionAMIOS
+          - BastionInstanceType
+          - NumBastionHosts
+      - Label:
+          default: MongoDB Database Configuration
+        Parameters:
+          - ClusterReplicaSetCount
+          - Iops
+          - MongoDBVersion
+          - MongoDBAdminUsername
+          - MongoDBAdminPassword
+          - NodeInstanceType
+          - ReplicaShardIndex
+          - VolumeSize
+          - VolumeType
+      - Label:
+          default: AWS Quick Start Configuration
+        Parameters:
+          - QSS3BucketName
+          - QSS3KeyPrefix
+    ParameterLabels:
+      AvailabilityZones:
+        default: Availability Zones
+      BastionAMIOS:
+        default: Bastion AMI Operating System
+      BastionInstanceType:
+        default: Bastion Instance Type
+      ClusterReplicaSetCount:
+        default: Cluster Replica Set Count
+      Iops:
+        default: IOPS
+      KeyPairName:
+        default: Key Pair Name
+      NumBastionHosts:
+        default: Number of Bastion Hosts
+      MongoDBAdminPassword:
+        default: MongoDB Admin Password
+      MongoDBAdminUsername:
+        default: MongoDB Admin Username
+      MongoDBVersion:
+        default: MongoDB Version
+      NodeInstanceType:
+        default: Node Instance Type
+      NumberOfAZs:
+        default: Number of Availability Zones
+      PrivateSubnet1CIDR:
+        default: Private Subnet 1 CIDR
+      PrivateSubnet2CIDR:
+        default: Private Subnet 2 CIDR
+      PrivateSubnet3CIDR:
+        default: Private Subnet 3 CIDR
+      PublicSubnet1CIDR:
+        default: Public Subnet 1 CIDR
+      PublicSubnet2CIDR:
+        default: Public Subnet 2 CIDR
+      PublicSubnet3CIDR:
+        default: Public Subnet 3 CIDR
+      QSS3BucketName:
+        default: Quick Start S3 Bucket Name
+      QSS3KeyPrefix:
+        default: Quick Start S3 Key Prefix
+      RemoteAccessCIDR:
+        default: Allowed Bastion External Access CIDR
+      ReplicaShardIndex:
+        default: Replica Shard Index
+      VolumeSize:
+        default: Volume Size
+      VolumeType:
+        default: Volume Type
+      VPCCIDR:
+        default: VPC CIDR
+  'AWS::CloudFormation::Designer':
+    b8b3a39a-ca38-46c6-9d1e-abb10b158a59:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 480
+        'y': 60
+      z: 1
+      embeds: []
+    10fd288f-f5dd-4e2e-a0f0-9c659fc8b288:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 660
+        'y': 150
+      z: 1
+      embeds: []
+    efa93763-0186-4fd3-809a-aabee2c0e6f2:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 480
+        'y': 210
+      z: 1
+      embeds: []
+      dependson:
+        - 4c3bccda-9fd8-46b4-9daf-de3cbe90deb6
+    4c3bccda-9fd8-46b4-9daf-de3cbe90deb6:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 210
+        'y': 90
+      z: 1
+      embeds: []
+      isassociatedwith:
+        - a10c43fb-954a-4039-9cd3-90851c9c4e5d
+    a10c43fb-954a-4039-9cd3-90851c9c4e5d:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 210
+        'y': 240
+      z: 1
+      embeds: []
+    53315440-b37d-4221-a829-d624b2746643:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 390
+        'y': 360
+      z: 1
+      embeds: []
+      dependson:
+        - 4c3bccda-9fd8-46b4-9daf-de3cbe90deb6
+    082eebe2-fe92-4ba0-8009-d385f218fc1e:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 30
+        'y': 90
+      z: 1
+      embeds: []
+      isassociatedwith:
+        - 4c3bccda-9fd8-46b4-9daf-de3cbe90deb6
+    b3e567ba-b82b-48c4-948e-785e324b7baf:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: -30
+        'y': 350
+      z: 1
+      embeds: []
+      isassociatedwith:
+        - 307030c2-d936-4e58-bd2f-7bda21832be4
+    307030c2-d936-4e58-bd2f-7bda21832be4:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 100
+        'y': 350
+      z: 0
+      embeds: []
+      isassociatedwith:
+        - 4c3bccda-9fd8-46b4-9daf-de3cbe90deb6
+Parameters:
+  PrivateSubnet2CIDR:
+    AllowedPattern: >-
+      ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(1[6-9]|2[0-8]))$
+    Default: 10.0.32.0/19
+    Type: String
+    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
+    Description: CIDR block for private subnet 2 located in Availability Zone 2.
+  PrivateSubnet3CIDR:
+    AllowedPattern: >-
+      ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(1[6-9]|2[0-8]))$
+    Default: 10.0.64.0/19
+    Type: String
+    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
+    Description: CIDR block for private subnet 3 located in Availability Zone 3.
+  QSS3BucketName:
+    AllowedPattern: '^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$'
+    Default: aws-quickstart
+    Type: String
+    ConstraintDescription: >-
+      Quick Start bucket name can include numbers, lowercase letters, uppercase
+      letters, and hyphens (-). It cannot start or end with a hyphen (-).
+    Description: >-
+      S3 bucket name for the Quick Start assets. Quick Start bucket name can
+      include numbers, lowercase letters, uppercase letters, and hyphens (-). It
+      cannot start or end with a hyphen (-).
+  PublicSubnet2CIDR:
+    AllowedPattern: >-
+      ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(1[6-9]|2[0-8]))$
+    Default: 10.0.144.0/20
+    Type: String
+    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
+    Description: CIDR Block for the public DMZ subnet 2 located in Availability Zone 2
+  PublicSubnet3CIDR:
+    AllowedPattern: >-
+      ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(1[6-9]|2[0-8]))$
+    Default: 10.0.160.0/20
+    Type: String
+    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
+    Description: CIDR Block for the public DMZ subnet 3 located in Availability Zone 3
+  KeyPairName:
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    Description: >-
+      Public/private key pairs allow you to securely connect to your instance
+      after it launches
+  PublicSubnet1CIDR:
+    AllowedPattern: >-
+      ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(1[6-9]|2[0-8]))$
+    Default: 10.0.128.0/20
+    Type: String
+    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
+    Description: CIDR Block for the public DMZ subnet 1 located in Availability Zone 1
+  BastionAMIOS:
+    AllowedValues:
+      - Amazon-Linux-HVM
+      - CentOS-7-HVM
+      - Ubuntu-Server-14.04-LTS-HVM
+      - Ubuntu-Server-16.04-LTS-HVM
+    Default: Amazon-Linux-HVM
+    Description: The Linux distribution for the AMI to be used for the bastion instances
+    Type: String
+  RemoteAccessCIDR:
+    AllowedPattern: >-
+      ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))$
+    Type: String
+    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/x
+    Description: Allowed CIDR block for external SSH access to the bastions
+  PrivateSubnet1CIDR:
+    AllowedPattern: >-
+      ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(1[6-9]|2[0-8]))$
+    Default: 10.0.0.0/19
+    Type: String
+    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
+    Description: CIDR block for private subnet 1 located in Availability Zone 1.
+  BastionInstanceType:
+    Default: t2.micro
+    Type: String
+    Description: Amazon EC2 instance type for the second bastion instance
+    AllowedValues:
+      - t2.nano
+      - t2.micro
+      - t2.small
+      - t2.medium
+      - t2.large
+      - m3.large
+      - m3.xlarge
+      - m3.2xlarge
+      - m4.large
+      - m4.xlarge
+      - m4.2xlarge
+      - m4.4xlarge
+  NumBastionHosts:
+    AllowedValues:
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+    Default: '1'
+    Description: Enter the number of bastion hosts to create
+    Type: String
+  VPCCIDR:
+    AllowedPattern: >-
+      ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(1[6-9]|2[0-8]))$
+    Default: 10.0.0.0/16
+    Type: String
+    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
+    Description: CIDR Block for the VPC
+  QSS3KeyPrefix:
+    AllowedPattern: '^[0-9a-zA-Z-/]*$'
+    Default: quickstart-mongodb/
+    Type: String
+    ConstraintDescription: >-
+      Quick Start key prefix can include numbers, lowercase letters, uppercase
+      letters, hyphens (-), and forward slash (/).
+    Description: >-
+      S3 key prefix for the Quick Start assets. Quick Start key prefix can
+      include numbers, lowercase letters, uppercase letters, hyphens (-), and
+      forward slash (/). It cannot start or end with a hyphen (-).
+  AvailabilityZones:
+    Type: 'List<AWS::EC2::AvailabilityZone::Name>'
+    Description: >-
+      List of Availability Zones to use for the subnets in the VPC. Note: The
+      logical order is preserved. 1 or 3 AZs are used for this deployment.
+  NumberOfAZs:
+    AllowedValues:
+      - '2'
+      - '3'
+    Description: >-
+      Number of Availability Zones to use in the VPC. This must match your
+      selections in the list of Availability Zones parameter.
+    Type: String
+  NodeInstanceType:
+    Default: m4.large
+    Type: String
+    Description: Amazon EC2 instance type for the MongoDB nodes.
+    AllowedValues:
+      - m5.large
+      - m5.xlarge
+      - m5.2xlarge
+      - m5.4xlarge
+      - m5.12xlarge
+      - m5.24xlarge
+      - c5.large
+      - c5.xlarge
+      - c5.2xlarge
+      - c5.4xlarge
+      - c5.9xlarge
+      - c5.18xlarge
+      - x1.16xlarge
+      - x1.32xlarge
+      - r4.large
+      - r4.xlarge
+      - r4.2xlarge
+      - r4.4xlarge
+      - r4.8xlarge
+      - r4.16xlarge
+      - i3.large
+      - i3.xlarge
+      - i3.2xlarge
+      - i3.4xlarge
+      - i3.8xlarge
+      - i3.16xlarge
+      - x1e.32xlarge
+      - x1e.16xlarge
+      - x1e.8xlarge
+      - x1e.4xlarge
+      - x1e.2xlarge
+      - x1e.xlarge
+      - m3.medium
+      - m3.large
+      - m3.xlarge
+      - m3.2xlarge
+      - m4.large
+      - m4.xlarge
+      - m4.2xlarge
+      - m4.4xlarge
+      - m4.10xlarge
+      - c3.large
+      - c3.xlarge
+      - c3.2xlarge
+      - c3.4xlarge
+      - c3.8xlarge
+      - r3.large
+      - r3.xlarge
+      - r3.2xlarge
+      - r3.4xlarge
+      - r3.8xlarge
+      - i2.xlarge
+      - i2.2xlarge
+      - i2.4xlarge
+      - i2.8xlarge
+  VolumeSize:
+    Default: '400'
+    Type: String
+    Description: EBS Volume Size (data) to be attached to node in GBs
+  VolumeType:
+    Default: gp2
+    Type: String
+    Description: 'EBS Volume Type (data) to be attached to node in GBs [io1,gp2]'
+    AllowedValues:
+      - gp2
+      - io1
+  MongoDBVersion:
+    Default: '4.0'
+    Type: String
+    Description: MongoDB version
+    AllowedValues:
+      - '4.0'
+      - '3.6'
+      - '3.4'
+      - '3.2'
+  MongoDBAdminUsername:
+    Default: admin
+    NoEcho: 'true'
+    Description: MongoDB admin account username
+    Type: String
+    MinLength: '1'
+    MaxLength: '16'
+    AllowedPattern: '[a-zA-Z][a-zA-Z0-9]*'
+    ConstraintDescription: must begin with a letter and contain only alphanumeric characters.
+  MongoDBAdminPassword:
+    AllowedPattern: '([A-Za-z0-9_@-]{8,32})'
+    ConstraintDescription: 'Input your MongoDB database password, Min 8, Maximum of 32 characters.'
+    Description: >-
+      Enter your MongoDB Database Password, Min 8, maximum of 32 characters.
+      Allowed characters are: [A-Za-z0-9_@-]
+    NoEcho: 'true'
+    Type: String
+  ClusterReplicaSetCount:
+    Default: '3'
+    Type: String
+    Description: Number of Replica Set Members. Choose 1 or 3
+    AllowedValues:
+      - '1'
+      - '3'
+  ReplicaShardIndex:
+    Description: Shard Index of this replica set
+    Type: String
+    Default: '0'
+  Iops:
+    Default: '100'
+    Type: String
+    Description: Iops of EBS volume when io1 type is chosen. Otherwise ignored
+Conditions:
+  CreateThreeReplicaSet: !Equals 
+    - !Ref ClusterReplicaSetCount
+    - '3'
+  RepeatSubnet: !Equals 
+    - Ref: NumberOfAZs
+    - '2'
+  GovCloudCondition: !Equals 
+    - Ref: 'AWS::Region'
+    - us-gov-west-1
+Resources:
+  VPCStack:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      TemplateURL: !Sub 
+        - >-
+          https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
+        - QSS3Region: !If 
+            - GovCloudCondition
+            - s3-us-gov-west-1
+            - s3
+      Parameters:
+        AvailabilityZones: !Join 
+          - ','
+          - !Ref AvailabilityZones
+        KeyPairName: !Ref KeyPairName
+        NumberOfAZs: !Ref NumberOfAZs
+        PrivateSubnet1ACIDR: !Ref PrivateSubnet1CIDR
+        PrivateSubnet2ACIDR: !Ref PrivateSubnet2CIDR
+        PrivateSubnet3ACIDR: !Ref PrivateSubnet3CIDR
+        PublicSubnet1CIDR: !Ref PublicSubnet1CIDR
+        PublicSubnet2CIDR: !Ref PublicSubnet2CIDR
+        PublicSubnet3CIDR: !Ref PublicSubnet3CIDR
+        VPCCIDR: !Ref VPCCIDR
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: b8b3a39a-ca38-46c6-9d1e-abb10b158a59
+  BastionStack:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      TemplateURL: !Sub 
+        - >-
+          https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/templates/linux-bastion.template
+        - QSS3Region: !If 
+            - GovCloudCondition
+            - s3-us-gov-west-1
+            - s3
+      Parameters:
+        BastionInstanceType: !Ref BastionInstanceType
+        NumBastionHosts: !Ref NumBastionHosts
+        BastionAMIOS: !Ref BastionAMIOS
+        EnableTCPForwarding: 'true'
+        KeyPairName: !Ref KeyPairName
+        PublicSubnet1ID: !GetAtt 
+          - VPCStack
+          - Outputs.PublicSubnet1ID
+        PublicSubnet2ID: !GetAtt 
+          - VPCStack
+          - Outputs.PublicSubnet2ID
+        QSS3BucketName: !Ref QSS3BucketName
+        QSS3KeyPrefix: !Sub '${QSS3KeyPrefix}submodules/quickstart-linux-bastion/'
+        RemoteAccessCIDR: !Ref RemoteAccessCIDR
+        VPCID: !GetAtt 
+          - VPCStack
+          - Outputs.VPCID
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 10fd288f-f5dd-4e2e-a0f0-9c659fc8b288
+  MongoDBStack:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      TemplateURL: !Sub 
+        - >-
+          https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}templates/mongodb.template
+        - QSS3Region: !If 
+            - GovCloudCondition
+            - s3-us-gov-west-1
+            - s3
+      Parameters:
+        QSS3BucketName: !Ref QSS3BucketName
+        QSS3KeyPrefix: !Ref QSS3KeyPrefix
+        BastionSecurityGroupID: !GetAtt 
+          - BastionStack
+          - Outputs.BastionSecurityGroupID
+        ClusterReplicaSetCount: !Ref ClusterReplicaSetCount
+        Iops: !Ref Iops
+        KeyPairName: !Ref KeyPairName
+        MongoDBVersion: !Ref MongoDBVersion
+        MongoDBAdminUsername: !Ref MongoDBAdminUsername
+        MongoDBAdminPassword: !Ref MongoDBAdminPassword
+        NodeInstanceType: !Ref NodeInstanceType
+        PrimaryNodeSubnet: !GetAtt 
+          - VPCStack
+          - Outputs.PrivateSubnet1AID
+        Secondary0NodeSubnet: !GetAtt 
+          - VPCStack
+          - Outputs.PrivateSubnet2AID
+        Secondary1NodeSubnet: !If 
+          - RepeatSubnet
+          - !GetAtt 
+            - VPCStack
+            - Outputs.PrivateSubnet2AID
+          - !GetAtt 
+            - VPCStack
+            - Outputs.PrivateSubnet3AID
+        ReplicaShardIndex: !Ref ReplicaShardIndex
+        VPC: !GetAtt 
+          - VPCStack
+          - Outputs.VPCID
+        VolumeSize: !Ref VolumeSize
+        VolumeType: !Ref VolumeType
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: efa93763-0186-4fd3-809a-aabee2c0e6f2
+    DependsOn:
+      - AppNode
+  AppNode:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-04b9e92b5572fa0d1
+      KeyName: g4key
+      SecurityGroups:
+        - !Ref AppNodeSG
+      UserData: !Base64 >
+        #!/bin/bash
+
+        sudo apt-get update
+
+        sudo apt-get install -y apt-transport-https ca-certificates
+
+        sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80
+        --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+
+        sudo echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" |
+        tee /etc/apt/sources.list.d/docker.list
+
+        sudo apt-get update
+
+        sudo apt-get purge lxc-docker || true
+
+        sudo apt-get -y install linux-image-extra-$(uname -r)
+        linux-image-extra-virtual
+
+        sudo apt-get -y install docker-engine
+
+        sudo usermod -aG docker ubuntu
+
+        sudo mkdir -p /etc/systemd/system/docker.service.d
+
+        sudo printf "[Service]\nExecStart=\nExecStart=/usr/bin/dockerd -H fd://
+        -H tcp://0.0.0.0:2375\n" >> 
+        /etc/systemd/system/docker.service.d/docker.conf
+
+        sudo systemctl daemon-reload
+
+        sudo systemctl restart docker
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 4c3bccda-9fd8-46b4-9daf-de3cbe90deb6
+  AppNodeSG:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: 'for the app nodes that allow ssh, http and docker ports'
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '80'
+          ToPort: '80'
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: '2375'
+          ToPort: '2375'
+          CidrIp: 0.0.0.0/0
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: a10c43fb-954a-4039-9cd3-90851c9c4e5d
+  S3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties: {}
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 53315440-b37d-4221-a829-d624b2746643
+    DependsOn:
+      - AppNode
+  ELB:
+    Type: 'AWS::ElasticLoadBalancing::LoadBalancer'
+    Properties:
+      AvailabilityZones:
+        - us-east-1a
+      Instances:
+        - !Ref AppNode
+      Listeners:
+        - LoadBalancerPort: '80'
+          InstancePort: '80'
+          Protocol: HTTP
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 082eebe2-fe92-4ba0-8009-d385f218fc1e
+  AS:
+    Type: 'AWS::AutoScaling::AutoScalingGroup'
+    Properties:
+      AvailabilityZones: !GetAZs ''
+      LaunchConfigurationName: !Ref LaunchConfig
+      MinSize: '1'
+      MaxSize: '3'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: b3e567ba-b82b-48c4-948e-785e324b7baf
+  LaunchConfig:
+    Type: 'AWS::AutoScaling::LaunchConfiguration'
+    Properties:
+      ImageId: ami-04b9e92b5572fa0d1
+      KeyName: g4key
+      InstanceId: !Ref AppNode
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 307030c2-d936-4e58-bd2f-7bda21832be4
+Outputs:
+  PrimaryReplicaNodeIp:
+    Value: !GetAtt 
+      - MongoDBStack
+      - Outputs.PrimaryReplicaNodeIp
+    Description: Private IP Address of Primary Replica Node
+  SecondaryReplicaNode0Ip:
+    Value: !GetAtt 
+      - MongoDBStack
+      - Outputs.SecondaryReplicaNode0Ip
+    Description: Private IP Address of Secondary Replica 0 Node
+    Condition: CreateThreeReplicaSet
+  SecondaryReplicaNode1Ip:
+    Value: !GetAtt 
+      - MongoDBStack
+      - Outputs.SecondaryReplicaNode1Ip
+    Description: Private IP Address of Secondary Replica 1 Node
+    Condition: CreateThreeReplicaSet
+  MongoDBServerAccessSecurityGroup:
+    Value: !GetAtt 
+      - MongoDBStack
+      - Outputs.MongoDBServerAccessSecurityGroup
+    Description: MongoDB Access Security Group
