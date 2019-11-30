@@ -3,7 +3,7 @@ services:
   mongo:
     image: mongo:3.6
   web:
-    build: .
+    build: kblakethomas/comp6905-assignment4
     ports:
      - "8080:8080"
     environment:
