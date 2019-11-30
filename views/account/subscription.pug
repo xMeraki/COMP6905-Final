@@ -1,0 +1,177 @@
+extends ../product-layout
+
+block content
+  #content.site-content
+    #primary.content-area
+      main#main.site-main(role='main')
+        .container
+          .row
+            .col-lg-12
+              nav.woocommerce-breadcrumb(itemprop='breadcrumb')
+                a(href='/') Home
+                |  / My Subscription
+        .woocommerce-notices-wrapper
+        #product-842.post-842.product.type-product.status-publish.has-post-thumbnail.product_cat-subscription.first.instock.sale.featured.sold-individually.shipping-taxable.purchasable.product-type-simple
+          .container
+            .row
+              if user.subscription.title
+                .col-lg-6
+                  span.onsale #{user.subscription.discount}
+                  .woocommerce-product-gallery.woocommerce-product-gallery--with-images.woocommerce-product-gallery--columns-4.images(data-columns='4' style='opacity: 0; transition: opacity .25s ease-in-out;')
+                    figure.woocommerce-product-gallery__wrapper
+                      .woocommerce-product-gallery__image(data-thumb='http://wpthemecube.com/thebox/beauty/wp-content/uploads/2019/03/month_box-250x250.png')
+                        a(href='../../wp-content/uploads/2019/03/month_box.png')
+                          img.wp-post-image(width='600' height='600' src='../../wp-content/uploads/2019/03/month_box-600x600.png' alt='' title='month_box' data-caption='' data-src='http://wpthemecube.com/thebox/beauty/wp-content/uploads/2019/03/month_box.png' data-large_image='http://wpthemecube.com/thebox/beauty/wp-content/uploads/2019/03/month_box.png' data-large_image_width='700' data-large_image_height='700' srcset='../../wp-content/uploads/2019/03/month_box-600x600.png 600w, ../../wp-content/uploads/2019/03/month_box-150x150.png 150w, ../../wp-content/uploads/2019/03/month_box-300x300.png 300w, ../../wp-content/uploads/2019/03/month_box-412x412.png 412w, ../../wp-content/uploads/2019/03/month_box-250x250.png 250w, ../../wp-content/uploads/2019/03/month_box.png 700w' sizes='(max-width: 600px) 100vw, 600px')
+                      .woocommerce-product-gallery__image(data-thumb='http://wpthemecube.com/thebox/beauty/wp-content/uploads/2019/03/month_box2-250x250.png')
+                        a(href='../../wp-content/uploads/2019/03/month_box2.png')
+                          img(width='600' height='600' src='../../wp-content/uploads/2019/03/month_box2-600x600.png' alt='' title='month_box2' data-caption='' data-src='http://wpthemecube.com/thebox/beauty/wp-content/uploads/2019/03/month_box2.png' data-large_image='http://wpthemecube.com/thebox/beauty/wp-content/uploads/2019/03/month_box2.png' data-large_image_width='700' data-large_image_height='700' srcset='../../wp-content/uploads/2019/03/month_box2-600x600.png 600w, ../../wp-content/uploads/2019/03/month_box2-150x150.png 150w, ../../wp-content/uploads/2019/03/month_box2-300x300.png 300w, ../../wp-content/uploads/2019/03/month_box2-412x412.png 412w, ../../wp-content/uploads/2019/03/month_box2-250x250.png 250w, ../../wp-content/uploads/2019/03/month_box2.png 700w' sizes='(max-width: 600px) 100vw, 600px')
+                .col-lg-6
+                  .summary.entry-summary
+                    small.product_category_title
+                      a(href='../../product-category/subscription/index.html') Subscription
+                    br
+                    h1.product_title.entry-title #{user.subscription.title}
+                    p.price
+                      ins
+                        span.woocommerce-Price-amount.amount
+                          span.woocommerce-Price-currencySymbol $
+                          | #{user.subscription.discountedPrice}
+                      del
+                        span.woocommerce-Price-amount.amount
+                          span.woocommerce-Price-currencySymbol $
+                          | #{user.subscription.price}
+                    .woocommerce-product-details__short-description
+                      p &nbsp;
+                      p.lead Re-bills every 12 months.
+                      ul.list-unstyled
+                        li Duis ac blandit ipsum.
+                        li Etiam finibus iaculis imperdiet.
+                        li Donec finibus tincidunt massa quis feugiat.
+                        li Risus imperdiet id fusce vitae facilisi.
+                        li Nam sed mauris ornare, tempus elit quis.
+                        li Morbi ullamcorper id lorem vitae varius.
+                      ul.list-inline
+                        li.list-inline-item.badge-box
+                          i.thebox-scooter
+                          |  Free Shipping
+                        li.list-inline-item.badge-box
+                          i.thebox-medal-1
+                          |  100% Satisfaction
+                        li.list-inline-item.badge-box
+                          i.thebox-24-hours-1
+                          |  Cancel Anytimewe
+                    form.cart(action='/account/subscription/cancel' method='post' onsubmit="return confirm('Are you sure you want to cancel your subscription?');")
+                      .quantity.hidden
+                        input(type='hidden', name='_csrf', value=_csrf)
+                      button.single_add_to_cart_button.button.alt(type='submit' name='cancel-subscription') Cancel Subscription
+                    .product_meta
+                      span.posted_in
+                        | Category: 
+                        a(href='../../product-category/subscription/index.html' rel='tag') Subscription
+              else
+                section.kc-elm.kc-css-805486.kc_row
+                  .kc-row-container.kc-container
+                    .kc-wrap-columns
+                      .kc-elm.kc-css-993433.kc_col-sm-12.kc_column.kc_col-sm-12
+                        .kc-col-container
+                          .kc-elm.kc-css-552190.kc_text_block
+                            .woocommerce
+                              .woocommerce-notices-wrapper
+                              p.cart-empty You have no active subscription.
+                              p.return-to-shop
+                                a.btn.btn-primary.wc-backward(href='/products') Choose A Subscription
+              if user.subscription.title
+                .col-lg-12
+                  section.related.products
+                    h2 Related products
+                    ul.products.row.columns-4
+                      if user.subscription.title != '12 Months Subscription'
+                        li.col-lg-3.post-842.product.type-product.status-publish.has-post-thumbnail.product_cat-subscription.first.instock.sale.featured.sold-individually.shipping-taxable.purchasable.product-type-simple
+                          .card
+                            .card-img-top
+                              a(href='#')
+                                span.onsale 9%
+                                img.attachment-woocommerce_thumbnail.size-woocommerce_thumbnail(width='300' height='300' src='http://wpthemecube.com/thebox/beauty/wp-content/uploads/2019/03/month_box-300x300.png' alt='' srcset='http://wpthemecube.com/thebox/beauty/wp-content/uploads/2019/03/month_box-300x300.png 300w, http://wpthemecube.com/thebox/beauty/wp-content/uploads/2019/03/month_box-150x150.png 150w, http://wpthemecube.com/thebox/beauty/wp-content/uploads/2019/03/month_box-412x412.png 412w, http://wpthemecube.com/thebox/beauty/wp-content/uploads/2019/03/month_box-600x600.png 600w, http://wpthemecube.com/thebox/beauty/wp-content/uploads/2019/03/month_box-250x250.png 250w, http://wpthemecube.com/thebox/beauty/wp-content/uploads/2019/03/month_box.png 700w' sizes='(max-width: 300px) 100vw, 300px')
+                            .card-body
+                              a(href='#')
+                                h2.woocommerce-loop-product__title 12 Months Subscription
+                              small.product_category_title
+                                a(href='http://wpthemecube.com/thebox/beauty/product-category/subscription/') Subscription
+                              br
+                              span.price
+                                ins
+                                  span.woocommerce-Price-amount.amount
+                                    span.woocommerce-Price-currencySymbol $
+                                    | 455.40
+                                del
+                                  span.woocommerce-Price-amount.amount
+                                    span.woocommerce-Price-currencySymbol $
+                                    | 502.80
+                              br
+                              form.cart(action='/account/subscription/switch' method='post')
+                                .quantity.hidden
+                                  input(type='hidden', name='title', value='12 Months Subscription')
+                                  input(type='hidden', name='price', value='502.80')
+                                  input(type='hidden', name='discountedPrice', value='455.40')
+                                  input(type='hidden', name='discount', value='9%')
+                                  input(type='hidden', name='_csrf', value=_csrf)
+                                button.button.product_type_simple.add_to_cart_button.ajax_add_to_cart(type='submit' name='cancel-subscription') Switch Subscription
+                      if user.subscription.title != '6 Months Subscription'
+                        li.col-lg-3.post-841.product.type-product.status-publish.has-post-thumbnail.product_cat-subscription.first.instock.sale.featured.sold-individually.shipping-taxable.purchasable.product-type-simple
+                          .card
+                            .card-img-top
+                              a(href='../../index.html@p=841.html')
+                                span.onsale 5%
+                                img.attachment-woocommerce_thumbnail.size-woocommerce_thumbnail(width='300' height='300' src='../../wp-content/uploads/2019/03/month_box-300x300.png' alt='' srcset='../../wp-content/uploads/2019/03/month_box-300x300.png 300w, ../../wp-content/uploads/2019/03/month_box-150x150.png 150w, ../../wp-content/uploads/2019/03/month_box-412x412.png 412w, ../../wp-content/uploads/2019/03/month_box-600x600.png 600w, ../../wp-content/uploads/2019/03/month_box-250x250.png 250w, ../../wp-content/uploads/2019/03/month_box.png 700w' sizes='(max-width: 300px) 100vw, 300px')
+                            .card-body
+                              a(href='../../index.html@p=841.html')
+                                h2.woocommerce-loop-product__title 6 Months Subscription
+                              small.product_category_title
+                                a(href='../../product-category/subscription/index.html') Subscription
+                              br
+                              span.price
+                                ins
+                                  span.woocommerce-Price-amount.amount
+                                    span.woocommerce-Price-currencySymbol $
+                                    | 239.70
+                                del
+                                  span.woocommerce-Price-amount.amount
+                                    span.woocommerce-Price-currencySymbol $
+                                    | 251.40
+                              br
+                              form.cart(action='/account/subscription/switch' method='post')
+                                .quantity.hidden
+                                  input(type='hidden', name='title', value='6 Months Subscription')
+                                  input(type='hidden', name='price', value='251.40')
+                                  input(type='hidden', name='discountedPrice', value='239.70')
+                                  input(type='hidden', name='discount', value='5%')
+                                  input(type='hidden', name='_csrf', value=_csrf)
+                                button.button.product_type_simple.add_to_cart_button.ajax_add_to_cart(type='submit' name='cancel-subscription') Switch Subscription
+                      if user.subscription.title != 'This Month\'s Box'
+                        li.col-lg-3.post-804.product.type-product.status-publish.has-post-thumbnail.product_cat-subscription.instock.featured.sold-individually.shipping-taxable.purchasable.product-type-simple
+                          .card
+                            .card-img-top
+                              a(href='../../index.html@p=804.html')
+                                img.attachment-woocommerce_thumbnail.size-woocommerce_thumbnail(width='300' height='300' src='../../wp-content/uploads/2019/03/month_box-300x300.png' alt='' srcset='../../wp-content/uploads/2019/03/month_box-300x300.png 300w, ../../wp-content/uploads/2019/03/month_box-150x150.png 150w, ../../wp-content/uploads/2019/03/month_box-412x412.png 412w, ../../wp-content/uploads/2019/03/month_box-600x600.png 600w, ../../wp-content/uploads/2019/03/month_box-250x250.png 250w, ../../wp-content/uploads/2019/03/month_box.png 700w' sizes='(max-width: 300px) 100vw, 300px')
+                            .card-body
+                              a(href='../../index.html@p=804.html')
+                                h2.woocommerce-loop-product__title This Month&rsquo;s Box
+                              small.product_category_title
+                                a(href='../../product-category/subscription/index.html') Subscription
+                              br
+                              span.price
+                                ins
+                                  span.woocommerce-Price-amount.amount
+                                    span.woocommerce-Price-currencySymbol $
+                                    | 41.90
+                              br
+                              form.cart(action='/account/subscription/switch' method='post')
+                                .quantity.hidden
+                                  input(type='hidden', name='title', value='This Month\'s Box')
+                                  input(type='hidden', name='price', value='41.90')
+                                  input(type='hidden', name='discountedPrice', value='41.90')
+                                  input(type='hidden', name='discount', value='0%')
+                                  input(type='hidden', name='_csrf', value=_csrf)
+                                button.button.product_type_simple.add_to_cart_button.ajax_add_to_cart(type='submit' name='cancel-subscription') Switch Subscription
+      // #main
+    // #primary

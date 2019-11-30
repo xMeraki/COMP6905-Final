@@ -1,0 +1,49 @@
+header.site-header
+  nav.navbar.navbar-custom.fixed-top.navbar-expand-md
+    .container
+      a.navbar-brand(href='/' title='diemBox | Beauty')
+        img.navbar-logo(src='/wp-content/themes/thebox/img/logo_cosmetic.png' alt='thebox | Beauty')
+      a.navbar-toggler.login-link(href='/login' title='Login / Register')
+        i.feather.icon-user
+      a.navbar-toggler.header-mini-cart(href='index.html@p=806.html')
+        i.feather.icon.icon-shopping-bag
+      button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navigation-primary' aria-controls='navigation-primary' aria-expanded='false' aria-label='Toggle navigation')
+        i.feather.icon.icon-menu
+      #navigation-primary.navbar-collapse.collapse
+        .mx-auto
+          ul#menu-primary.navbar-nav
+            li#menu-item-7.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-7.nav-item(itemscope='itemscope' itemtype='https://www.schema.org/SiteNavigationElement')
+              a.nav-link(title='scroll' href='/#how-it-works') How it Works?
+            li#menu-item-524.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-524.nav-item(itemscope='itemscope' itemtype='https://www.schema.org/SiteNavigationElement')
+              a.nav-link(title='scroll' href='/#whats-inside') What&rsquo;s Inside?
+            li#menu-item-525.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-525.nav-item(itemscope='itemscope' itemtype='https://www.schema.org/SiteNavigationElement')
+              a.nav-link(title='scroll' href='/#pricing') Pricing
+      if !user
+        a.navbar-collapse.collapse.login-link.mr-2(href='/login' title='Login / Register')
+          i.feather.icon-user
+      else
+        a.dropdown-toggle.nav-link.navbar-collapse.collapse.login-link.mr-2(href='#', data-toggle='dropdown')
+          if user.profile.picture
+            img(src=user.profile.picture)
+          else
+            img(src=user.gravatar(32))
+          i.caret
+        ul.dropdown-menu
+          li.dropdown-item
+            a(href='/account') My Account
+          li.dropdown-item
+            a(href='/account/subscription') My Subscription
+          li.divider.dropdown-item
+          li.dropdown-item
+            a(href='/logout') Logout
+      //- #woo.navbar-collapse.collapse.justify-content-end
+      //-   ul#site-header-cart.site-header-cart
+      //-     li
+      //-       a.cart-contents(href='index.html@p=806.html' title='View your shopping cart')
+      //-         .shopping-ico
+      //-           i.icon.feather.icon-shopping-bag
+      //-           span.count 0
+      //-         span.amount.ml-2  $0.00
+      //-     li
+      //-       .widget.woocommerce.widget_shopping_cart
+      //-         .widget_shopping_cart_content
