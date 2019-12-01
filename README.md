@@ -10,3 +10,47 @@ Clone this Repository
 $ git clone https://github.com/xMeraki/COMP6905-Final
 ```
 
+Enter the folder
+```Bash
+$ cd COMP6905-Final
+```
+
+Create a new keypair Eg. Using the EC2 console
+
+Place the keypair .pem file into the COMP6905-Final folder
+
+Change the permission of the keypair
+```Bash
+$ chmod 400 <keypair file>
+```
+
+Next configure your aws information
+```Bash
+$ aws configure
+```
+
+Go into the fullstack.yml file and change the keypair to the name of your keypair
+
+
+Run the Stack by running the command
+```Bash
+$ aws cloudformation create-stack --stack-name <name> -- template-body file://$PWD/fullstack.yml --parameters 
+```
+Once the stack is deployed, copy the IP address from the EC2 instance 
+
+Run the following:
+```Bash
+$ docker -H tcp://<your public ip>:2375 ps -a
+```
+
+To deploy the App to Docker:
+```Bash
+$ docker -H tcp://<ec2 ip address> ps -a 
+$ docker-compose  -H tcp://<ec2 ip address> -f app.yml run --rm app rails db:migrate 
+$ docker-compose  -H tcp://<ec2 ip address> -f app.yml up -d 
+$ docker-compose -H tcp://<ec2 ip address>  -f app.yml ps 
+$ docker-compose  -H tcp://<ec2 ip address> -f app.yml run --rm app rails db:seed
+
+```
+
+
