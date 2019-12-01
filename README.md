@@ -34,7 +34,7 @@ Go into the fullstack.yml file and change the keypair to the name of your keypai
 
 Run the Stack by running the command
 ```Bash
-$ aws cloudformation create-stack --stack-name <name> -- template-body file://$PWD/fullstack.yml --parameters 
+$ aws cloudformation create-stack --stack-name <name> -- template-body file://$PWD/fullstack.yml --parameters ParameterKey=NumberofAZs
 ```
 Once the stack is deployed, copy the IP address from the EC2 instance 
 
@@ -45,11 +45,9 @@ $ docker -H tcp://<your public ip>:2375 ps -a
 
 To deploy the App to Docker:
 ```Bash
-$ docker -H tcp://<ec2 ip address> ps -a 
-$ docker-compose  -H tcp://<ec2 ip address> -f app.yml run --rm app rails db:migrate 
-$ docker-compose  -H tcp://<ec2 ip address> -f app.yml up -d 
-$ docker-compose -H tcp://<ec2 ip address>  -f app.yml ps 
-$ docker-compose  -H tcp://<ec2 ip address> -f app.yml run --rm app rails db:seed
+$ docker -H tcp://35.175.207.201:2375 ps -a
+$ docker-compose -H tcp://35.175.207.201:2375 -f app.yml up -d
+$ docker-compose -H tcp://35.175.207.201:2375 -f app.yml ps
 
 ```
 
