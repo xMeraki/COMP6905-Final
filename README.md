@@ -31,6 +31,8 @@ $ aws configure
 
 Go into the fullstack.yml file and change the keypair to the name of your keypair and the ImageID to the image ID of the instaance you're using.
 
+![Change](https://github.com/xMeraki/COMP6905-Final/blob/master/screenshots/change.jpg)
+
 
 
 Run the Stack by running the command
