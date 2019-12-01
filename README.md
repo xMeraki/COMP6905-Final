@@ -40,7 +40,7 @@ Go into the fullstack.yml file and change the keypair to the name of your keypai
 
 
 
-Run the Stack by running the command
+Run the Stack by running the command. Changing the parameter values to what's needed.
 ```Bash
 $ aws cloudformation create-stack --stack-name <name> -- template-body file://$PWD/fullstack.yml --parameters ParameterKey=NumberofAZs
 ```
