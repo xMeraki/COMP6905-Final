@@ -7,7 +7,12 @@ The First Caribbean Curated Subscription Box provider.
 - [Install aws cli globally](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
 
 
+
 **Instructions**
+First configure your aws information
+```Bash
+$ aws configure
+```
 
 Clone this Repository
 
@@ -27,11 +32,6 @@ Place the keypair .pem file into the COMP6905-Final folder
 Change the permission of the keypair
 ```Bash
 $ chmod 400 <keypair file>
-```
-
-Next configure your aws information
-```Bash
-$ aws configure
 ```
 
 Go into the fullstack.yml file and change the keypair to the name of your keypair and the ImageID to the image ID of the instaance you're using.
