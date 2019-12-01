@@ -29,7 +29,8 @@ Next configure your aws information
 $ aws configure
 ```
 
-Go into the fullstack.yml file and change the keypair to the name of your keypair
+Go into the fullstack.yml file and change the keypair to the name of your keypair and the ImageID to the image ID of the instaance you're using.
+
 
 
 Run the Stack by running the command
@@ -49,6 +50,11 @@ $ docker -H tcp://35.175.207.201:2375 ps -a
 $ docker-compose -H tcp://35.175.207.201:2375 -f app.yml up -d
 $ docker-compose -H tcp://35.175.207.201:2375 -f app.yml ps
 
+```
+
+After this is ran, you can check to see if everything works by going to
+```Bash
+http://<ec2 address>/
 ```
 
 
