@@ -38,7 +38,8 @@ Run the Stack by running the command
 $ aws cloudformation create-stack --stack-name <name> -- template-body file://$PWD/fullstack.yml --parameters ParameterKey=NumberofAZs
 ```
 You can check it being created on the CloudFormation Console
-![Stack Deployed]https://github.com/xMeraki/COMP6905-Final/blob/master/screenshots/stackdeployed.jpeg
+
+![Stack Deployed](https://github.com/xMeraki/COMP6905-Final/blob/master/screenshots/stackdeployed.jpeg)
 
 Once the stack is deployed, copy the IP address from the EC2 instance 
 
