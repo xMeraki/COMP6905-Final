@@ -1,3 +1,5 @@
+![diemBox](https://github.com/xMeraki/COMP6905-Final/blob/master/screenshots/Picture1.jpg)
+
 DiemBox Web Server Application
 The First Caribbean Curated Subscription Box provider.
 
