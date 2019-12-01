@@ -42,7 +42,8 @@ Go into the fullstack.yml file and change the keypair to the name of your keypai
 
 Run the Stack by running the command. Changing the parameter values to what's needed.
 ```Bash
-$ aws cloudformation create-stack --stack-name <name> -- template-body file://$PWD/fullstack.yml --parameters ParameterKey=NumberofAZs
+$ aws cloudformation create-stack --stack-name runtest  --template-body file://$PWD/fullstack.yml --parameters ParameterKey=NumberOfAZs,ParameterValue=2 ParameterKey=MonoDBAdminPassword,ParameterValue="12345678"  ParameterKey=KeyPairName,ParameterValue=g4key.pem ParameterKey=AvailabilityZones,ParameterValue=us-east-1a ParameterKey=AvailabilityZones,ParameterValue=us-east1b ParameterKey=RemoteAccessCIDR,ParameterValue=0.0.0.0/0
+
 ```
 You can check it being created on the CloudFormation Console
 
