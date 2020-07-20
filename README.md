@@ -34,7 +34,7 @@ Change the permission of the keypair
 $ chmod 400 <keypair file>
 ```
 
-Go into the fullstack.yml file and change the keypair to the name of your keypair and the ImageID to the image ID of the instaance you're using.
+Go into the fullstack.yml file and change the keypair to the name of your keypair and the ImageID to the image ID of the instance you're using.
 
 ![Change](https://github.com/xMeraki/COMP6905-Final/blob/master/screenshots/change.jpg)
 
